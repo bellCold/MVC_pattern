@@ -2,9 +2,15 @@ package model;
 
 public class ReplyDTO {
     private int id;
-    private int writerId;
-    private int boardId;
+    private int writerId;  //
+    private int boardId;   //
     private String content;
+
+    public ReplyDTO() {}
+
+    public ReplyDTO(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -36,6 +42,13 @@ public class ReplyDTO {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public ReplyDTO(ReplyDTO origin) {
+        this.id = origin.id;
+        this.writerId = origin.writerId;
+        this.boardId = origin.boardId;
+        this.content = origin.content;
     }
 
     public boolean equals(Object o) {

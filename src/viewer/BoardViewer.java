@@ -2,6 +2,7 @@ package viewer;
 
 import controller.BoardController;
 import model.BoardDTO;
+import model.ReplyDTO;
 import model.UserDTO;
 import util.ScannerUtil;
 
@@ -24,11 +25,16 @@ public class BoardViewer {
     private BoardController controller;
     private Scanner scanner;
     private UserViewer userViewer;
+    private ReplyViewer replyViewer;
     private UserDTO logIn;
 
     public BoardViewer(Scanner scanner) {
         controller = new BoardController();
         this.scanner = scanner;
+    }
+
+    public void setReplyViewer(ReplyViewer r) {
+        this.replyViewer = r;
     }
 
     public void setLogIn(UserDTO logIn) {
@@ -77,7 +83,7 @@ public class BoardViewer {
                 System.out.printf("%d. %s\n", b.getId(), b.getTitle());
             }
 
-            //****/
+
             String message = "상세보기할 글의 번호나 뒤로 가실려면 0을 입력해주세요.";
             int userChoice = ScannerUtil.nextInt(scanner, message);
             while (userChoice != 0 && controller.selectOne(userChoice) == null) {
@@ -99,14 +105,23 @@ public class BoardViewer {
         System.out.println();
         System.out.println("글 내용: " + b.getContent());
 
+        /*댓글 보여주기 replyViewer*/
+        replyViewer.showReply(id);
         String message;
         if (b.getWriterId() == logIn.getId()) {
-            message = "1.수정 2.삭제 3. 뒤로가가기";
+            message = "1.수정 2.삭제 3.댓글등록 4.댓글수정 5.댓글삭제 6.뒤로가가기";
             int userChoice = ScannerUtil.nextInt(scanner, message);
             if (userChoice == 1) {
                 updateBoard(id);
             } else if (userChoice == 2) {
                 deleteBoard(id);
+            } else if (userChoice == 3) {
+                replyViewer.writeReply(id);
+                printOne(id);
+            } else if (userChoice == 4) {
+                replyViewer.updateReply();
+            } else if (userChoice == 5) {
+                replyViewer.deleteReply();
             } else {
                 printList();
             }
@@ -139,5 +154,7 @@ public class BoardViewer {
     public void deleteByWriterId(int writerId) {
         controller.deleteByWriterId(writerId);
     }
+
+    /* reply viewer */
 
 }

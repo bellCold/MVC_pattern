@@ -11,10 +11,14 @@ public class UserViewer {
     private Scanner scanner;
     private UserDTO lonIn;
     private BoardViewer boardViewer;
+    private ReplyViewer replyViewer;
 
     public UserViewer(Scanner scanner) {
         userController = new UserController();
         this.scanner = scanner;
+    }
+    public void setReplyViewer(ReplyViewer r) {
+        this.replyViewer = r;
     }
 
     public void setBoardViewer(BoardViewer boardViewer) {
@@ -24,11 +28,11 @@ public class UserViewer {
     public void showIndex() {
         while (true) {
             int userChoice = ScannerUtil.nextInt(scanner, "1.로그인 2.회원가입 3.종료");
-
             if (userChoice == 1) {
                 logIn();
                 if (lonIn != null) {
                     boardViewer.setLogIn(lonIn);
+                    replyViewer.setLogIn(lonIn);
                     showMenu();
                 }
             } else if (userChoice == 2) {
@@ -79,7 +83,7 @@ public class UserViewer {
 
     private void showMenu() {
         while (lonIn != null) {
-            int userChoice = ScannerUtil.nextInt(scanner, "1.게시판 2.회원 정보 상세보기 2.로그아웃");
+            int userChoice = ScannerUtil.nextInt(scanner, "1.게시판 2.회원 정보 상세보기 3.로그아웃");
             if (userChoice == 1) {
                 boardViewer.showMenu();
             } else if (userChoice == 2) {

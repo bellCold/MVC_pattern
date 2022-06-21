@@ -1,6 +1,7 @@
 package main;
 
 import viewer.BoardViewer;
+import viewer.ReplyViewer;
 import viewer.UserViewer;
 
 import java.util.Scanner;
@@ -15,10 +16,12 @@ public class BoardMain {
 
         BoardViewer boardViewer = new BoardViewer(scanner);
         UserViewer userViewer = new UserViewer(scanner);
+        ReplyViewer replyViewer = new ReplyViewer(scanner);
 
         userViewer.setBoardViewer(boardViewer);
         boardViewer.setUserViewer(userViewer);
-
+        userViewer.setReplyViewer(replyViewer);
+        boardViewer.setReplyViewer(replyViewer);
         userViewer.showIndex();
     }
 }
